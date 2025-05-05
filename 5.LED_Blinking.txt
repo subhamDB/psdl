@@ -1,0 +1,76 @@
+#include <htc.h>
+#define _XTAL_FREQ 8000000
+void main()
+{
+  TRISB=0X00;
+  PORTB=0X00;
+  while(1)
+  { 
+    PORTB=0XFF;
+    __delay_ms(10000);
+    PORTB=0X00;
+    __delay_ms(10000);
+  }
+}
+
+
+
+
+//right to left
+#include <xc.h>                 // Use <htc.h> if you're using an older compiler
+#define _XTAL_FREQ 8000000      // Define crystal frequency
+
+void main() {
+    TRISB = 0x00;               // Set PORTB as output
+    PORTB = 0x00;               // Clear PORTB
+
+    while(1) {
+        for (int i = 0; i < 8; i++) {
+            PORTB = 1 << i;     // Shift 1 bit to the left i times (blinks RB0 to RB7)
+            __delay_ms(300);    // Delay between shifts
+        }
+    }
+}
+
+
+
+//left to right
+#include <xc.h>                 // Use <htc.h> if you're using an older compiler
+#define _XTAL_FREQ 8000000      // Define crystal frequency (8 MHz)
+
+void main() {
+    TRISB = 0x00;               // Set PORTB as output
+    PORTB = 0x00;               // Clear PORTB
+
+    while(1) {
+        for (int i = 7; i >= 0; i--) {
+            PORTB = 1 << i;     // Turn on LED from RB7 to RB0
+            __delay_ms(300);    // Delay for visibility
+        }
+    }
+}
+
+
+//right to left and viseversa
+#include <xc.h>                 // For newer compilers; use <htc.h> if required
+#define _XTAL_FREQ 8000000      // Set your crystal frequency
+
+void main() {
+    TRISB = 0x00;               // Set PORTB as output
+    PORTB = 0x00;               // Clear PORTB initially
+
+    while(1) {
+        // Right to left (RB0 to RB7)
+        for (int i = 0; i < 8; i++) {
+            PORTB = 1 << i;     // Turn on one LED at a time from RB0 to RB7
+            __delay_ms(300);
+        }
+
+        // Left to right (RB7 to RB0)
+        for (int i = 6; i >= 0; i--) {
+            PORTB = 1 << i;     // Turn on one LED at a time from RB6 to RB0
+            __delay_ms(300);
+        }
+    }
+}
+
